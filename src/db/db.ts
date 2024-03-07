@@ -1,6 +1,3 @@
-export let Users = [
-  {
-    id: '1',
-    name: 'JOHN',
-  },
-];
+import { User } from 'src/models/userModel';
+
+export let Users: User[] = [];
