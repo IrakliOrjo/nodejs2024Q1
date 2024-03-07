@@ -34,9 +34,6 @@ export class UserService {
   }
 
   findUser(id) {
-    if (typeof id !== 'string') {
-      throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
-    }
     let user = Users.find((user) => user.id === id);
     if (user) {
       const { password, ...rest } = user;
