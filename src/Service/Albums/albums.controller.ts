@@ -12,6 +12,7 @@ import {
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from 'src/models/albumModels';
 import { validate as uuidValidate } from 'uuid';
+import { ParamDto } from 'src/models/restModels';
 
 @Controller('album')
 export class AlbumsController {
@@ -23,7 +24,7 @@ export class AlbumsController {
   }
 
   @Get(':id')
-  getAlbum(@Param() params: any): any {
+  getAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -35,7 +36,7 @@ export class AlbumsController {
     return this.albumService.createAlbum(dto);
   }
   @Put(':id')
-  UpdateAlbum(@Param() params: any, @Body() dto: CreateAlbumDto) {
+  UpdateAlbum(@Param() params: ParamDto, @Body() dto: CreateAlbumDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -43,7 +44,7 @@ export class AlbumsController {
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteAlbum(@Param() params: any) {
+  deleteAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }

@@ -12,6 +12,7 @@ import {
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from 'src/models/tracksModel';
 import { validate as uuidValidate } from 'uuid';
+import { ParamDto } from 'src/models/restModels';
 
 @Controller('track')
 export class TracksController {
@@ -23,7 +24,7 @@ export class TracksController {
   }
 
   @Get(':id')
-  getTrack(@Param() params: any): any {
+  getTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -35,7 +36,7 @@ export class TracksController {
     return this.tracksService.createTrack(dto);
   }
   @Put(':id')
-  UpdateTrack(@Param() params: any, @Body() dto: CreateTrackDto) {
+  UpdateTrack(@Param() params: ParamDto, @Body() dto: CreateTrackDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -43,7 +44,7 @@ export class TracksController {
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteTrack(@Param() params: any) {
+  deleteTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }

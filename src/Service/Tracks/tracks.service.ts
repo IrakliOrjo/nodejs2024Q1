@@ -10,19 +10,18 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 @Injectable()
 export class TracksService {
-  constructor() {}
   getAllTracks() {
     return Tracks;
   }
   getTrack(id: string) {
-    let track = Tracks.find((song) => song.id === id);
+    const track = Tracks.find((song) => song.id === id);
     if (!track) {
       throw new HttpException('Album not found', HttpStatus.NOT_FOUND);
     }
     return track;
   }
   createTrack(dto: CreateTrackDto) {
-    let track: TrackType = {
+    const track: TrackType = {
       id: uuidv4(),
       name: dto.name,
       artistId: dto.artistId,
@@ -34,7 +33,7 @@ export class TracksService {
   }
 
   updateTrack(trackId: string, dto: CreateTrackDto) {
-    let track = Tracks.find((song) => song.id === trackId);
+    const track = Tracks.find((song) => song.id === trackId);
 
     if (!track) {
       throw new NotFoundException('album not found');
@@ -48,14 +47,14 @@ export class TracksService {
   }
 
   deleteTrack(trackId: string) {
-    let foundTrack = Tracks.find((song) => song.id === trackId);
+    const foundTrack = Tracks.find((song) => song.id === trackId);
     if (!foundTrack) {
       throw new HttpException('Artist not found', HttpStatus.NOT_FOUND);
     }
-    let indexOfTrack = Tracks.indexOf(foundTrack);
-    let isInFavs = Favorites.tracks.find((track) => track.id === trackId);
+    const indexOfTrack = Tracks.indexOf(foundTrack);
+    const isInFavs = Favorites.tracks.find((track) => track.id === trackId);
     if (isInFavs) {
-      let indexOfTrackInFavs = Favorites.tracks.indexOf(isInFavs);
+      const indexOfTrackInFavs = Favorites.tracks.indexOf(isInFavs);
       Favorites.tracks.splice(indexOfTrackInFavs, 1);
     }
     Tracks.splice(indexOfTrack, 1);

@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   Delete,
   Get,
@@ -10,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { validate as uuidValidate } from 'uuid';
+import { ParamDto } from 'src/models/restModels';
 
 @Controller('favs')
 export class FavoritesController {
@@ -20,7 +20,7 @@ export class FavoritesController {
   }
   @Post('track/:id')
   @HttpCode(201)
-  addTrack(@Param() params: any) {
+  addTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -28,7 +28,7 @@ export class FavoritesController {
   }
   @Delete('track/:id')
   @HttpCode(204)
-  deleteTrack(@Param() params: any) {
+  deleteTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -36,7 +36,7 @@ export class FavoritesController {
   }
   @Post('album/:id')
   @HttpCode(201)
-  addAlbum(@Param() params: any) {
+  addAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -44,7 +44,7 @@ export class FavoritesController {
   }
   @Delete('album/:id')
   @HttpCode(204)
-  deleteAlbum(@Param() params: any) {
+  deleteAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -52,7 +52,7 @@ export class FavoritesController {
   }
   @Post('artist/:id')
   @HttpCode(201)
-  addArtist(@Param() params: any) {
+  addArtist(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -60,7 +60,7 @@ export class FavoritesController {
   }
   @Delete('artist/:id')
   @HttpCode(204)
-  deleteArtist(@Param() params: any) {
+  deleteArtist(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }

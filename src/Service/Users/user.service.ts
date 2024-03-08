@@ -11,15 +11,14 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 @Injectable()
 export class UserService {
-  userVersion: number = 1;
-  constructor() {}
+  userVersion = 1;
 
   getUsers() {
     return Users;
   }
 
   createUser(dto: CreateUserDto) {
-    let user: User = {
+    const user: User = {
       id: uuidv4(),
       login: dto.login,
       password: dto.password,
@@ -34,7 +33,7 @@ export class UserService {
   }
 
   findUser(id) {
-    let user = Users.find((user) => user.id === id);
+    const user = Users.find((user) => user.id === id);
     if (user) {
       const { password, ...rest } = user;
       return rest;
@@ -43,12 +42,12 @@ export class UserService {
     }
   }
   updatePassword(id: string, dto: UpdatePasswordDto) {
-    let profile = Users.find((user) => user.id === id);
+    const profile = Users.find((user) => user.id === id);
 
     if (!profile) {
       throw new NotFoundException('user not found');
     }
-    let passwordsMatch = profile.password === dto.oldPassword;
+    const passwordsMatch = profile.password === dto.oldPassword;
     if (!passwordsMatch) {
       throw new HttpException(
         'Old password doesnt match',
@@ -60,15 +59,15 @@ export class UserService {
     profile.updatedAt = new Date().getTime();
     profile.password = dto.newPassword;
     //filter data without password and send
-    let { password, ...rest } = profile;
+    const { password, ...rest } = profile;
     return rest;
   }
   deleteUser(id: string) {
-    let foundUser = Users.find((user) => user.id === id);
+    const foundUser = Users.find((user) => user.id === id);
     if (!foundUser) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    let indexOfUser = Users.indexOf(foundUser);
+    const indexOfUser = Users.indexOf(foundUser);
     Users.splice(indexOfUser, 1);
     return 'done';
   }

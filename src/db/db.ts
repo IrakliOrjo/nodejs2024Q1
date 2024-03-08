@@ -4,18 +4,18 @@ import { FavoritesType } from 'src/models/favoritesModels';
 import { TrackType } from 'src/models/tracksModel';
 import { User } from 'src/models/userModel';
 
-export let Users: User[] = [];
+export const Users: User[] = [];
 
-export let Artists: ArtistType[] = [];
+export const Artists: ArtistType[] = [];
 
-export let Albums: AlbumType[] = [];
+export const Albums: AlbumType[] = [];
 
-export let Tracks: TrackType[] = [];
+export const Tracks: TrackType[] = [];
 
-export let favoriteArtists: ArtistType[] = [];
-export let favoriteAlbums: AlbumType[] = [];
-export let favoriteTracks: TrackType[] = [];
-export let Favorites: FavoritesType = {
+export const favoriteArtists: ArtistType[] = [];
+export const favoriteAlbums: AlbumType[] = [];
+export const favoriteTracks: TrackType[] = [];
+export const Favorites: FavoritesType = {
   artists: [],
   albums: [],
   tracks: [],

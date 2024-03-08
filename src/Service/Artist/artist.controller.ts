@@ -12,6 +12,7 @@ import {
 import { ArtistService } from './artist.service';
 import { validate as uuidValidate } from 'uuid';
 import { ArtistType, CreateArtistDto } from 'src/models/artistModels';
+import { ParamDto } from 'src/models/restModels';
 
 @Controller('artist')
 export class ArtistController {
@@ -23,7 +24,7 @@ export class ArtistController {
   }
 
   @Get(':id')
-  getArtist(@Param() params: any): any {
+  getArtist(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -35,7 +36,7 @@ export class ArtistController {
     return this.artistService.createArtist(dto);
   }
   @Put(':id')
-  UpdateArtist(@Param() params: any, @Body() dto: CreateArtistDto) {
+  UpdateArtist(@Param() params: ParamDto, @Body() dto: CreateArtistDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
@@ -43,7 +44,7 @@ export class ArtistController {
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteArtist(@Param() params: any) {
+  deleteArtist(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }

@@ -10,19 +10,18 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 @Injectable()
 export class AlbumsService {
-  constructor() {}
   getAllAlbums() {
     return Albums;
   }
   getAlbum(id: string) {
-    let album = Albums.find((album) => album.id === id);
+    const album = Albums.find((album) => album.id === id);
     if (!album) {
       throw new HttpException('Album not found', HttpStatus.NOT_FOUND);
     }
     return album;
   }
   createAlbum(dto: CreateAlbumDto) {
-    let album: AlbumType = {
+    const album: AlbumType = {
       id: uuidv4(),
       name: dto.name,
       year: dto.year,
@@ -33,7 +32,7 @@ export class AlbumsService {
   }
 
   updateAlbum(albumId: string, dto: CreateAlbumDto) {
-    let album = Albums.find((album) => album.id === albumId);
+    const album = Albums.find((album) => album.id === albumId);
 
     if (!album) {
       throw new NotFoundException('album not found');
@@ -46,17 +45,17 @@ export class AlbumsService {
   }
 
   deleteAlbum(albumId: string) {
-    let foundAlbum = Albums.find((album) => album.id === albumId);
+    const foundAlbum = Albums.find((album) => album.id === albumId);
     if (!foundAlbum) {
       throw new HttpException('Artist not found', HttpStatus.NOT_FOUND);
     }
-    let indexOfAlbum = Albums.indexOf(foundAlbum);
+    const indexOfAlbum = Albums.indexOf(foundAlbum);
     Tracks.forEach((track) =>
       track.albumId === albumId ? (track.albumId = null) : '',
     );
-    let isInFavs = Favorites.albums.find((album) => album.id === albumId);
+    const isInFavs = Favorites.albums.find((album) => album.id === albumId);
     if (isInFavs) {
-      let indexOfAlbumInFavs = Favorites.albums.indexOf(isInFavs);
+      const indexOfAlbumInFavs = Favorites.albums.indexOf(isInFavs);
       Favorites.albums.splice(indexOfAlbumInFavs, 1);
     }
     Albums.splice(indexOfAlbum, 1);
