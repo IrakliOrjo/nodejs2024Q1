@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
-import { isNull } from 'util';
+import { ApiProperty } from '@nestjs/swagger';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface AlbumType {
@@ -12,11 +12,14 @@ export interface AlbumType {
 export class CreateAlbumDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   name: string;
   @IsNumber()
   @IsNotEmpty()
+  @ApiProperty()
   year: number;
   @ValidateIf((o) => typeof o.otherProperty === 'string' || null)
   @IsNotEmpty()
+  @ApiProperty()
   artistId: string | null;
 }

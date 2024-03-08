@@ -24,6 +24,7 @@ npm run start
 ```
 
 App will start on port (4000 as default)
+You can access OpenApi(Swagger) on adress {http://localhost:4000/api}
 
 ## Testing
 
