@@ -8,7 +8,7 @@
 ## Downloading
 
 ```
-git clone {[https://github.com/IrakliOrjo/nodejs2024Q1](https://github.com/IrakliOrjo/nodejs2024Q1.git)}
+git clone {https://github.com/IrakliOrjo/nodejs2024Q1.git}
 ```
 
 ## Installing NPM modules
