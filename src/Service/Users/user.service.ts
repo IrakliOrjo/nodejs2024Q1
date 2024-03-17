@@ -7,14 +7,16 @@ import {
 } from '@nestjs/common';
 import { Users } from 'src/db/db';
 import { CreateUserDto, UpdatePasswordDto, User } from 'src/models/userModel';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 @Injectable()
 export class UserService {
+  constructor(private prisma: PrismaService) {}
   userVersion = 1;
 
   getUsers() {
-    return Users;
+    return this.prisma.user.findMany();
   }
 
   createUser(dto: CreateUserDto) {

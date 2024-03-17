@@ -6,6 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prisma:dev:deploy": "prisma migrate deploy",
+    "docker:rm": "docker compose rm db app -s -f -v",
+    "docker:up": "docker compose up db app -d",
+    "docker:restart": "npm run docker:rm && npm run sleep1s && npm run docker:up && npm run sleep1s && npm run prisma:dev:deploy",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -19,7 +23,8 @@
     "test:refresh": "cross-env TEST_MODE=auth jest --testPathPattern refresh.e2e.spec.ts --noStackTrace --runInBand",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "sleep1s": "node -e \"setTimeout(() => process.exit(0), 2000)\""
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -28,6 +33,7 @@
     "@nestjs/mapped-types": "^1.0.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
+    "@prisma/client": "^5.11.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
@@ -59,6 +65,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.2.5",
     "prettier": "^2.3.2",
+    "prisma": "^5.11.0",
     "source-map-support": "^0.5.20",
     "supertest": "^6.2.3",
     "ts-jest": "^27.0.3",

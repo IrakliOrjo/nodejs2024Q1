@@ -5,6 +5,7 @@ import { ArtistModule } from './Service/Artist/artist.module';
 import { AlbumsModule } from './Service/Albums/albums.module';
 
 import { FavoritesModule } from './Service/Favorites/favorites.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { FavoritesModule } from './Service/Favorites/favorites.module';
     ArtistModule,
     AlbumsModule,
     FavoritesModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}

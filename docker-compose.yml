@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  db:
+    container_name: db
+    image: postgres:13
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - pg_logs:/var/log/postgresql
+      - ./prisma:/app/prisma
+    networks:
+      - company
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    env_file:
+      - .env  
+    volumes:
+      - .:/app
+    ports:
+      - 4000:4000
+    command: npm run start:dev  
+    depends_on:
+      - db
+    restart: on-failure  
+    networks:
+      - company
+volumes:
+  pg_data:
+  pg_logs:
+networks:
+  company:
+    driver: bridge

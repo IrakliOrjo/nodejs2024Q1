@@ -21,12 +21,7 @@ export class UserController {
 
   @Get('/')
   getUser() {
-    const users: User[] = this.userService.getUsers();
-    const filteredUsers = users.map((user) => {
-      const { password, ...rest } = user;
-      return rest;
-    });
-    return filteredUsers;
+    return this.userService.getUsers();
   }
 
   @Get(':id')
