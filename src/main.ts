@@ -13,17 +13,6 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  const fileContents = fs.readFileSync('doc/api.yaml', 'utf8');
-  const swaggerDocument = yaml.parse(fileContents);
-
-  const config = new DocumentBuilder()
-    .setTitle('Home Library Service')
-    .setDescription('Home music library service')
-    .setVersion('1.0.0')
-    .addTag('artist, albums, tracks, users')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, swaggerDocument);
 
   await app.listen(process.env.PORT || 4000);
 }

@@ -1,16 +1,24 @@
 # Build stage
-FROM node:20-alpine3.18 AS build
+FROM node:20-alpine3.18 AS builder
 WORKDIR /app
+
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
-RUN npm ci
+COPY prisma ./prisma/
+COPY tsconfig.build.json ./
+RUN npm install
+
 COPY . .
 RUN npm run build
 
-# Production stage
 FROM node:20-alpine3.18
-WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/tsconfig.build.json ./
+COPY prisma ./prisma/
+RUN npx prisma generate
 EXPOSE 4000
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:docker"]
 

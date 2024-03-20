@@ -6,10 +6,12 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prisma:dev:deploy": "prisma migrate deploy",
-    "docker:rm": "docker compose rm db app -s -f -v",
-    "docker:up": "docker compose up db app -d",
+    "start:migrate:dev": "npm run build && prisma migrate deploy && npm run start:dev",
+     "migration:generate": "npm run build && typeorm migration:generate -d dist/database/datasource.js src/database/migrations/migration",
+    "docker:rm": "docker compose rm  app -s -f -v",
+    "docker:up": "docker compose up  app -d",
     "docker:restart": "npm run docker:rm && npm run sleep1s && npm run docker:up && npm run sleep1s && npm run prisma:dev:deploy",
+    "start:docker": "npx prisma migrate dev --name init && npm run start:dev",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -26,6 +28,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "sleep1s": "node -e \"setTimeout(() => process.exit(0), 2000)\""
   },
+  "prisma": {
+  "schema": "prisma/schema.prisma"
+},
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
