@@ -5,7 +5,6 @@ import {
   NotFoundException,
   Post,
 } from '@nestjs/common';
-import { Users } from 'src/db/db';
 import { CreateUserDto, UpdatePasswordDto, User } from 'src/models/userModel';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
@@ -13,38 +12,48 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
-  userVersion = 1;
 
-  getUsers() {
-    return this.prisma.user.findMany();
+  async getUsers() {
+    return await this.prisma.user.findMany();
   }
 
-  createUser(dto: CreateUserDto) {
-    const user: User = {
-      id: uuidv4(),
-      login: dto.login,
-      password: dto.password,
-      version: 1,
-      createdAt: new Date().getTime(),
-      updatedAt: new Date().getTime(),
+  async createUser(dto: CreateUserDto) {
+    const user = await this.prisma.user.create({
+      data: {
+        login: dto.login,
+        password: dto.password,
+      },
+    });
+
+    const newUser = {
+      id: user.id,
+      login: user.login,
+      version: user.version,
+      createdAt: user.createdAt.getTime(),
+      updatedAt: user.updatedAt.getTime(),
     };
-    Users.push(user);
-    this.userVersion++;
-
-    return user;
+    return newUser;
   }
 
-  findUser(id) {
-    const user = Users.find((user) => user.id === id);
+  async findUser(userId: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
     if (user) {
-      const { password, ...rest } = user;
-      return rest;
+      delete user.password;
+      return user;
     } else {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
   }
-  updatePassword(id: string, dto: UpdatePasswordDto) {
-    const profile = Users.find((user) => user.id === id);
+  async updatePassword(userId: string, dto: UpdatePasswordDto) {
+    const profile = await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
 
     if (!profile) {
       throw new NotFoundException('user not found');
@@ -56,21 +65,39 @@ export class UserService {
         HttpStatus.FORBIDDEN,
       );
     }
-    //update version, update time, password
-    profile.version = profile.version + 1;
-    profile.updatedAt = new Date().getTime();
-    profile.password = dto.newPassword;
-    //filter data without password and send
-    const { password, ...rest } = profile;
-    return rest;
+    const updatedUser = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: dto.newPassword,
+        version: { increment: 1 },
+      },
+    });
+    //i send this as a new object, to turn the date to number to tests dont complain
+    const changedPassUser = {
+      id: updatedUser.id,
+      login: updatedUser.login,
+      version: updatedUser.version,
+      createdAt: updatedUser.createdAt.getTime(),
+      updatedAt: updatedUser.updatedAt.getTime(),
+    };
+    return changedPassUser;
   }
-  deleteUser(id: string) {
-    const foundUser = Users.find((user) => user.id === id);
+  async deleteUser(userId: string) {
+    const foundUser = await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
     if (!foundUser) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    const indexOfUser = Users.indexOf(foundUser);
-    Users.splice(indexOfUser, 1);
-    return 'done';
+    await this.prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return true;
   }
 }

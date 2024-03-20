@@ -8,10 +8,20 @@ export interface FavoritesType {
   tracks: TrackType[]; // favorite tracks ids
 }
 
-interface FavoritesResponse {
-  artists: ArtistType[];
-  albums: AlbumType[];
-  tracks: TrackType[];
+export interface FavoritesResponse {
+  artists: FavArtist[];
+  albums: FavAlbum[];
+  tracks: FavTrack[];
+}
+
+export interface FavAlbum {
+  albumId: string;
+}
+export interface FavTrack {
+  trackId: string;
+}
+export interface FavArtist {
+  artistId: string;
 }
 
 interface Artist {

@@ -20,38 +20,35 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('/')
-  getUser() {
-    return this.userService.getUsers();
+  async getUser() {
+    return await this.userService.getUsers();
   }
 
   @Get(':id')
-  findOne(@Param() params: any): any {
+  async findOne(@Param() params: any) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.userService.findUser(params.id);
+    return await this.userService.findUser(params.id);
   }
   @Post('/')
   @HttpCode(201)
-  createUser(@Body() dto: CreateUserDto) {
-    console.log(dto, 'params');
-    const createdUser = this.userService.createUser(dto);
-    const { password, ...rest } = createdUser;
-    return rest;
+  async createUser(@Body() dto: CreateUserDto) {
+    return await this.userService.createUser(dto);
   }
   @Put(':id')
-  updatePassword(@Param() params: any, @Body() dto: UpdatePasswordDto) {
+  async updatePassword(@Param() params: any, @Body() dto: UpdatePasswordDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.userService.updatePassword(params.id, dto);
+    return await this.userService.updatePassword(params.id, dto);
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteUser(@Param() params: any) {
+  async deleteUser(@Param() params: any) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.userService.deleteUser(params.id);
+    return await this.userService.deleteUser(params.id);
   }
 }

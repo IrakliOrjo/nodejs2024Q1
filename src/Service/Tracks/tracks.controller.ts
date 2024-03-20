@@ -19,35 +19,35 @@ export class TracksController {
   constructor(private tracksService: TracksService) {}
 
   @Get('/')
-  getAllTracks() {
-    return this.tracksService.getAllTracks();
+  async getAllTracks() {
+    return await this.tracksService.getAllTracks();
   }
 
   @Get(':id')
-  getTrack(@Param() params: ParamDto) {
+  async getTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.tracksService.getTrack(params.id);
+    return await this.tracksService.getTrack(params.id);
   }
   @Post('/')
   @HttpCode(201)
-  createTrack(@Body() dto: CreateTrackDto) {
-    return this.tracksService.createTrack(dto);
+  async createTrack(@Body() dto: CreateTrackDto) {
+    return await this.tracksService.createTrack(dto);
   }
   @Put(':id')
-  UpdateTrack(@Param() params: ParamDto, @Body() dto: CreateTrackDto) {
+  async updateTrack(@Param() params: ParamDto, @Body() dto: CreateTrackDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.tracksService.updateTrack(params.id, dto);
+    return await this.tracksService.updateTrack(params.id, dto);
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteTrack(@Param() params: ParamDto) {
+  async deleteTrack(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.tracksService.deleteTrack(params.id);
+    return await this.tracksService.deleteTrack(params.id);
   }
 }

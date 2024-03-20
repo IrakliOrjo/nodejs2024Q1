@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   db:
-    image: postgres:latest
+    image: groovy/postgres-db
     container_name: db
     build:
       context: .
       dockerfile: Dockerfile.db
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_CONTAINER=${DB_HOST_DOCKER}    
@@ -23,11 +23,14 @@ services:
       - company
   app:
     container_name: app
+    image: groovy-service-app
     build:
       context: .
       dockerfile: Dockerfile.app
     ports:
       - ${PORT}:${PORT}
+    volumes:
+      - .:/app/volumes/src
     environment:
       - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL_DOCKER}

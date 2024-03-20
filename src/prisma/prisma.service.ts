@@ -19,7 +19,9 @@ export class PrismaService extends PrismaClient {
       this.artist.deleteMany(),
       this.track.deleteMany(),
       this.album.deleteMany(),
-      this.favorites.deleteMany(),
+      this.favAlbum.deleteMany(),
+      this.favArtist.deleteMany(),
+      this.favTrack.deleteMany(),
     ]);
   }
 }

@@ -19,35 +19,35 @@ export class AlbumsController {
   constructor(private albumService: AlbumsService) {}
 
   @Get('/')
-  getAllAlbums() {
-    return this.albumService.getAllAlbums();
+  async getAllAlbums() {
+    return await this.albumService.getAllAlbums();
   }
 
   @Get(':id')
-  getAlbum(@Param() params: ParamDto) {
+  async getAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.albumService.getAlbum(params.id);
+    return await this.albumService.getAlbum(params.id);
   }
   @Post('/')
   @HttpCode(201)
-  createAlbum(@Body() dto: CreateAlbumDto) {
-    return this.albumService.createAlbum(dto);
+  async createAlbum(@Body() dto: CreateAlbumDto) {
+    return await this.albumService.createAlbum(dto);
   }
   @Put(':id')
-  UpdateAlbum(@Param() params: ParamDto, @Body() dto: CreateAlbumDto) {
+  async updateAlbum(@Param() params: ParamDto, @Body() dto: CreateAlbumDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.albumService.updateAlbum(params.id, dto);
+    return await this.albumService.updateAlbum(params.id, dto);
   }
   @Delete(':id')
   @HttpCode(204)
-  deleteAlbum(@Param() params: ParamDto) {
+  async deleteAlbum(@Param() params: ParamDto) {
     if (!uuidValidate(params.id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    return this.albumService.deleteAlbum(params.id);
+    return await this.albumService.deleteAlbum(params.id);
   }
 }

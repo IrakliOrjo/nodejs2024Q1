@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "start:migrate:dev": "npm run build && prisma migrate deploy && npm run start:dev",
-     "migration:generate": "npm run build && typeorm migration:generate -d dist/database/datasource.js src/database/migrations/migration",
     "docker:rm": "docker compose rm  app -s -f -v",
     "docker:up": "docker compose up  app -d",
     "docker:restart": "npm run docker:rm && npm run sleep1s && npm run docker:up && npm run sleep1s && npm run prisma:dev:deploy",
@@ -26,6 +25,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:scan":  "docker scout cves groovy-service-app && docker scout cves groovy/postgres-db",
     "sleep1s": "node -e \"setTimeout(() => process.exit(0), 2000)\""
   },
   "prisma": {
