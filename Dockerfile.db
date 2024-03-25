@@ -1,0 +1,7 @@
+FROM postgres:16.2-alpine3.18
+
+ENV PG_DATA=/var/lib/postgresql/data
+
+
+
+CMD ["postgres"]
