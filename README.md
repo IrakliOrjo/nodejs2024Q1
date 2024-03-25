@@ -9,6 +9,29 @@
 
 ```
 git clone {https://github.com/IrakliOrjo/nodejs2024Q1}
+
+```
+
+## Change Branch
+
+```
+git checkout dev-part2
+```
+
+## Docker usage
+
+rename .env.example file to .env
+
+Run Docker Desktop
+
+```
+npm run docker
+```
+
+## For Docker Scan
+
+```
+npm run docker:scan
 ```
 
 ## Installing NPM modules

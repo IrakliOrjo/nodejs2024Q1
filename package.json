@@ -6,10 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start:migrate:dev": "npm run build && prisma migrate deploy && npm run start:dev",
-    "docker:rm": "docker compose rm  app -s -f -v",
-    "docker:up": "docker compose up  app -d",
-    "docker:restart": "npm run docker:rm && npm run sleep1s && npm run docker:up && npm run sleep1s && npm run prisma:dev:deploy",
+    "docker": "docker compose up",
     "start:docker": "npx prisma migrate dev --name init && npm run start:dev",
     "prebuild": "rimraf dist",
     "build": "nest build",
