@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: groovy/postgres-db
+    image: irakliorjo/db-service
     container_name: db
     build:
       context: .
@@ -23,7 +23,7 @@ services:
       - company
   app:
     container_name: app
-    image: groovy-service-app
+    image: irakliorjo/app-service
     build:
       context: .
       dockerfile: Dockerfile.app

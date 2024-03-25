@@ -25,7 +25,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "docker:scan":  "docker scout cves groovy-service-app && docker scout cves groovy/postgres-db",
+    "docker:scan":  "docker scout cves irakliorjo/app-service:v1.0 && docker scout cves irakliorjo/db-service:v1.0",
     "sleep1s": "node -e \"setTimeout(() => process.exit(0), 2000)\""
   },
   "prisma": {
